@@ -15,3 +15,13 @@
 **/
 
     // TO BE COMPLETED //
+public class Lion extends Animal {
+    int ageMature = 5;
+    int maxAge = 50;
+    int masse = 10;
+
+    public Lion(double facteurCroissance) {
+        this.facteurCroissance = facteurCroissance;
+        setProie(false);
+    }
+}
