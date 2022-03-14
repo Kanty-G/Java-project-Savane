@@ -46,6 +46,9 @@ abstract class Animal implements ProiePredateur {
 
     @Override
     public void mourir() {
+        if (age > ageMax){
+        }
+        if
 
     }
 
@@ -56,7 +59,9 @@ abstract class Animal implements ProiePredateur {
 
     @Override
     public boolean estMature() {
-        return false;
+        if ( age <= ageMature){
+            return false;
+        }
     }
 
     @Override
@@ -77,7 +82,6 @@ abstract class Animal implements ProiePredateur {
     @Override
     public void setMasse(double masse) {
         this.masse = masse;
-
     }
 
     @Override
