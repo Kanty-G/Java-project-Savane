@@ -23,7 +23,7 @@ abstract class Animal implements ProiePredateur {
     protected double facteurCroissance;
     protected double masse;
     protected int maxAge;
-    protected int masseNourriture;
+    protected double masseNourriture;
 
     @Override
     public void naitre() {
@@ -32,13 +32,13 @@ abstract class Animal implements ProiePredateur {
 
     @Override
     public void vieillir(double masse, int age) {
-        this.age=age+1;
-        this.masse= masse*facteurCroissance;
+        this.age = age+1;
+        this.masse= masse * facteurCroissance;
     }
 
     @Override
-    public void manger(masseNourriture) {
-        masseNourriture=
+    public void manger(double masse,double masseNourriture) {
+        this.masseNourriture = masse*2;
 
     }
 
@@ -49,10 +49,7 @@ abstract class Animal implements ProiePredateur {
 
     @Override
     public void mourir() {
-        if (age > ageMax){
         }
-        if
-
     }
 
     @Override
