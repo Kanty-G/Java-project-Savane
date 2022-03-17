@@ -26,6 +26,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     protected int nombreProies=0;
     protected int nombrePredateurs=0;
+    protected int nombreProiesMatures=0;
+    protected int nombrePredateursMatures=0;
     private ArrayList<Animal> individus = new ArrayList<>();
 
 
@@ -63,12 +65,23 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProiesMatures () {
-        return 0;
+
+        for(int i=0;i<=(individus.size()-1);i++){
+            if(individus.get(i).estProie()&individus.get(i).estMature()){
+                nombreProiesMatures++;
+            }
+        }
+        return nombreProiesMatures;
     }
 
     @Override
     public int getNombrePredateursMatures () {
-        return 0;
+        for(int i=0;i<=(individus.size()-1);i++){
+            if(individus.get(i).estPredateur()&individus.get(i).estMature()){
+                nombrePredateursMatures++;
+            }
+        }
+        return nombrePredateursMatures;
     }
 
     @Override
