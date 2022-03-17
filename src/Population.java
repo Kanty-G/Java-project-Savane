@@ -23,12 +23,9 @@ import java.util.Random;
 
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
-    public static void main(String[] args) {
 
-
-        // TO BE COMPLETED //
-    }
-
+    protected int nombreProies=0;
+    protected int nombrePredateurs=0;
     private ArrayList<Animal> individus = new ArrayList<>();
 
 
@@ -36,21 +33,28 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         individus.addAll(proies);
         individus.addAll(predateurs);
-        System.out.println(individus);
-
 
         // TO BE COMPLETED //
-
     }
 
     @Override
     public int getNombreProies () {
-        return 0;
+        for (int i=0;i<= (individus.size()-1);i++){
+            if(individus.get(i).estProie()){
+                nombreProies++;
+            }
+        }
+        return nombreProies;
     }
 
     @Override
     public int getNombrePredateurs () {
-        return 0;
+        for(int i=0;i<=(individus.size()-1);i++){
+            if(individus.get(i).estPredateur()){
+                nombrePredateurs++;
+            }
+        }
+        return nombrePredateurs;
     }
 
     @Override
