@@ -25,6 +25,7 @@ abstract class Animal implements ProiePredateur {
         protected int AGEMAX;
         protected double masseAManger;
         protected boolean vivant;
+        protected boolean predateur;
 
 
         @Override
@@ -32,25 +33,26 @@ abstract class Animal implements ProiePredateur {
             vivant = true;
         }
 
-
         @Override
         public void vieillir (){
+
             age = age + 1;
             masse = masse * facteurCroissance; //
-            if (age > AGEMAX){
+            if (age > getAgeMax()){
                 mourir();
+
             }
 
         }
 
         @Override
-        public void manger(){
+        public void manger(){ // besoin savoir se que tu mange , la quanite et l<actualise
             masseAManger = masse * 2; // REVOIR MARCHE PAS defenir dans lion et antilope
         }
 
         @Override
         public Animal accoucher () {
-            // faire
+            // TODO:faire
             return null;
         }
 
@@ -61,14 +63,14 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public boolean estVivant () {
-            return vivant; // REVOIR APRES
+            return vivant;
         }
 
         @Override
         public boolean estMature () {
-            if (age <= ageMature) {
+            if (age < getAgeMature()) {
                 return false;
-            }
+            } return true;
         }
 
         @Override
@@ -80,7 +82,16 @@ abstract class Animal implements ProiePredateur {
         public boolean estProie () {
             return proie;
         }
-        //  TODO: public boolean estPredateur(){ return ...}???
+
+        @Override
+        public void setPredateur(boolean predateur){
+            this.predateur = predateur;
+        }
+
+        @Override
+        public boolean estPredateur(){
+            return predateur;
+        }
 
         @Override
         public double getMasse () {

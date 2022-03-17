@@ -36,10 +36,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         individus.addAll(proies);
         individus.addAll(predateurs);
 
-        // vieillir pour une annee:
-        for (int i=0; i <= (individus.size()-1);i++){
-            individus.get(i).vieillir();
-        }
+
 
     }
 
@@ -86,14 +83,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProiesChassables () { // A VOIR : LE 20% C'EST SUR TOUT LES ANTILOPES OU BIEN SUR JUSTE LE DEBUT DE LA CHASSE AU ANTILOPES
-        return int(0,2 * getNombreProies());// REVOIR POUR NOMBRE A VIRGULE
+        return (int)(0.2 * getNombreProies());// APRES AVOIR VIEILLIT
     }
 
     @Override
-    public double masseProies () { // JE NE SAIS PAS TROP
-
-
-
+    public double masseProies () { // JE NE SAIS PAS TROP avec vieillir ou quoi???
+        // pour debuger c'est la masse total de tout les proies ensemble, si veillit fit des changemnents, si nait, si meurt ...
 
         return 0;
     }
@@ -105,6 +100,11 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
+        for (int i=0; i <= (individus.size()-1);i++){
+            individus.get(i).vieillir();
+        }
+        // if vivant == false{ individus.remove(i--)}
+        // bon de faire mourir si trop vieux ICI!!!!
 
     }
 
@@ -125,7 +125,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public Iterator<Animal> iterator() {
-        return null;
+        return this.individus.iterator();
+    }
+
+    public ArrayList<Animal> getIndividus(){
+        return individus;
+
     }
 
     // TO BE COMPLETED //

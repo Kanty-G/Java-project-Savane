@@ -172,4 +172,8 @@ public class Savane implements TP1Stats {
 	    masseTotaleAntilopes };
         return test;
     }
+	public Population getSavane(){
+		return savane;
+	}
+
 }
