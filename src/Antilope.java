@@ -17,17 +17,15 @@
     // TO BE COMPLETED //
 public class Antilope extends Animal{
     int ageMature = 2;
-    int maxAge = 15;
-    int masse =
+    static final public int AGEMAX = 15;
+    int masse = 10;
 
     public Antilope(double facteurCroissance) {
         this.facteurCroissance = facteurCroissance;
+        naitre();
         setProie(true);
     }
 
-    @Override
-    public void vieillir() {
 
-    }
 }
 

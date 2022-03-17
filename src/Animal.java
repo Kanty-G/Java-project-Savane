@@ -31,14 +31,15 @@ abstract class Animal implements ProiePredateur {
         public void naitre () {
             vivant = true;
         }
-//aa
+
 
         @Override
         public void vieillir (){
             age = age + 1;
-            masse = masse * facteurCroissance; // AGE
-
-            if
+            masse = masse * facteurCroissance; //
+            if (age > AGEMAX){
+                mourir();
+            }
 
         }
 
@@ -49,7 +50,7 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public Animal accoucher () {
-// faire
+            // faire
             return null;
         }
 
@@ -79,7 +80,7 @@ abstract class Animal implements ProiePredateur {
         public boolean estProie () {
             return proie;
         }
-        //  public boolean estPredateur(){}???
+        //  TODO: public boolean estPredateur(){ return ...}???
 
         @Override
         public double getMasse () {
@@ -110,4 +111,3 @@ abstract class Animal implements ProiePredateur {
             return ageMature;
         }
     }
-}
