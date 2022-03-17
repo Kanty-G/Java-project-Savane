@@ -24,47 +24,43 @@ abstract class Animal implements ProiePredateur {
         protected double masse = 10;
         protected int AGEMAX;
         protected double masseAManger;
+        protected boolean vivant;
 
 
         @Override
-        public void naitre () {// est ce que ou on dit age de depart et masse de depart???, parce que bebe = 0 ans
-            public void naitre ( int age, double masse){
-                // ajouter l<element
-            }
+        public void naitre () {
+            vivant = true;
         }
 
         @Override
-        public void vieillir ( double masse, int age){
-            this.age = age + 1;
-            this.masse = masse * facteurCroissance;
+        public void vieillir (){
+            age = age + 1;
+            masse = masse * facteurCroissance; // AGE
 
-        }
-
-        @Override
-        public void manger ( double masse){
-            masseAManger = masse * 2; //PAS CERTAINE; preciser si antilope ou bien herbe que l'animal mange?
-
-
-        }
-
-        @Override
-        public Animal accoucher () {
-
-            return null;
-        }
-
-        @Override
-        public void mourir () { // à modifier, mourir pour toutes les conditions? trop vieux, pas assez mangé...
-            if (age > AGEMAX) {
-            }
             if
 
         }
 
         @Override
+        public void manger(){
+            masseAManger = masse * 2; // REVOIR MARCHE PAS defenir dans lion et antilope
+        }
+
+        @Override
+        public Animal accoucher () {
+// faire
+            return null;
+        }
+
+        @Override
+        public void mourir () {
+            vivant = false;
+        }
+
+        @Override
         public boolean estVivant () {
-            return false;
-        } // a modifier
+            return vivant; // REVOIR APRES
+        }
 
         @Override
         public boolean estMature () {
@@ -82,7 +78,7 @@ abstract class Animal implements ProiePredateur {
         public boolean estProie () {
             return proie;
         }
-        //  estpredateur???
+        //  public boolean estPredateur(){}???
 
         @Override
         public double getMasse () {
