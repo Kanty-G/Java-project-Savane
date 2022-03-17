@@ -32,6 +32,7 @@ abstract class Animal implements ProiePredateur {
             vivant = true;
         }
 
+
         @Override
         public void vieillir (){
             age = age + 1;
