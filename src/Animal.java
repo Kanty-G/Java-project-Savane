@@ -80,9 +80,9 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public boolean estProie () {
-            return false;
-        } // a faire, difference entre setProie et estProie, car setProie retourne un false, mais c<est faux non?
-        // PARCE QUE doit pas avoir estproie et estpredateur???
+            return proie;
+        }
+        //  estpredateur???
 
         @Override
         public double getMasse () {
