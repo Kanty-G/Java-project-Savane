@@ -53,13 +53,13 @@ abstract class Animal implements ProiePredateur {
             return null;
         }
 
-//        @Override
-//        public void mourir () { // à modifier, mourir pour toutes les conditions? trop vieux, pas assez mangé...
-//            if (age > AGEMAX) {
-//            }
-//            if
-//
-//        }
+        @Override
+        public void mourir () { // à modifier, mourir pour toutes les conditions? trop vieux, pas assez mangé...
+            if (age > AGEMAX) {
+            }
+            if
+
+        }
 
         @Override
         public boolean estVivant () {
