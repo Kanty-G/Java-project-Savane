@@ -129,6 +129,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     bebeAntilopes.add(animal);
                     countAntilope = 0;
                 }
+            }
                 if (animal.estPredateur() && animal.estMature()) {
                     countLion++;
                     if (countLion == 2) {
@@ -138,7 +139,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     }
                 }
             }
-        }
+
         individus.addAll(bebeAntilopes);
         individus.addAll(bebeLions);
     }
