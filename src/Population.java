@@ -29,7 +29,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     protected int nombreProiesMatures=0;
     protected int nombrePredateursMatures=0;
     private ArrayList<Animal> individus = new ArrayList<>();
-    protected Animal enfant;
 
     public Population(Herbe herbe, ArrayList < Animal > proies, ArrayList < Animal > predateurs) {
 
@@ -83,7 +82,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
-    public int getNombreProiesChassables () { // A VOIR : LE 20% C'EST SUR TOUT LES ANTILOPES OU BIEN SUR JUSTE LE DEBUT DE LA CHASSE AU ANTILOPES
+    public int getNombreProiesChassables () {
         return (int)(0.2 * getNombreProies());// APRES AVOIR VIEILLIT
     }
 
@@ -118,9 +117,15 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void reproduire () {
+
+        for (int i=0; i < individus.size();i++) {
+            //Animal bebe = animal.accoucher();
+        }
+
         for(int i=0; i <(getNombreProiesMatures()/2);i++) {
-            enfant.accoucher();
-            individus.add(enfant);
+            Antilope.accoucher();
+            Antilope.naitre();
+            individus.add(Antilope);
 
         }
         for(int i=0; i <(getNombrePredateursMatures()/2);i++){
