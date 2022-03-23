@@ -29,7 +29,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     protected int nombreProiesMatures=0;
     protected int nombrePredateursMatures=0;
     private ArrayList<Animal> individus = new ArrayList<>();
-
+    protected Animal enfant;
 
     public Population(Herbe herbe, ArrayList < Animal > proies, ArrayList < Animal > predateurs) {
 
@@ -42,6 +42,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProies () {
+
         for (int i=0;i <= (individus.size()-1);i++){
             if(individus.get(i).estProie()){
                 nombreProies++;
@@ -104,18 +105,28 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             individus.get(i).vieillir();
         }
         // if vivant == false{ individus.remove(i--)}
-        // bon de faire mourir si trop vieux ICI!!!!
+        // bon de faire mourir si trop vieux ICI!!!!??
 
     }
 
     @Override
     public void chasser () {
 
+
+
     }
 
     @Override
     public void reproduire () {
+        for(int i=0; i <(getNombreProiesMatures()/2);i++) {
+            enfant.accoucher();
+            individus.add(enfant);
 
+        }
+        for(int i=0; i <(getNombrePredateursMatures()/2);i++){
+            enfant.accoucher();
+            individus.add(enfant);
+        }
     }
 
     @Override
@@ -129,7 +140,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     public ArrayList<Animal> getIndividus(){
-        return individus;
+        return this.individus;
 
     }
 
