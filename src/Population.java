@@ -28,7 +28,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     protected int nombrePredateurs=0;
     protected int nombreProiesMatures=0;
     protected int nombrePredateursMatures=0;
-    protected ArrayList<Animal> bebes = new ArrayList<>();
+
 
 
     private ArrayList<Animal> individus = new ArrayList<>();
@@ -99,10 +99,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
-        for (int i=0; i <= (individus.size()-1);i++){
-            individus.get(i).vieillir();
+        for (Animal animal : individus) {
+            animal.vieillir();
+        if (!animal.estVivant()){
+            individus.remove(animal);}
         }
-        // if vivant == false{ individus.remove(i--)}
+        // faut mettre --
         // bon de faire mourir si trop vieux ICI!!!!??
 
     }
@@ -116,6 +118,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void reproduire () {
+        ArrayList<Animal> bebes = new ArrayList<>();
         int countAntilope = 0;
         int countLion = 0;
         for(Animal parent: individus) {
@@ -135,7 +138,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 }
             }
         individus.addAll(bebes);
-
     }
 
 
@@ -153,7 +155,4 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         return this.individus;
 
     }
-
-    // TO BE COMPLETED //
-
 }
