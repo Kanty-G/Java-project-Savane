@@ -99,14 +99,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
-        for (Animal animal : individus) {
+        for (int i = 0; i < individus.size(); i++) {
+            Animal animal = individus.get(i);
             animal.vieillir();
-        if (!animal.estVivant()){
-            individus.remove(animal);}
+            if (!animal.estVivant())
+                individus.remove(i--);
         }
-        // faut mettre --
-        // bon de faire mourir si trop vieux ICI!!!!??
-
     }
 
     @Override
