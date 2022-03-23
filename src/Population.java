@@ -119,18 +119,22 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void reproduire () {
+        int countAntilope=0;
+        int countLion=0;
         for(Animal animal: individus) {
-            if (animal.estProie()) {
-                nombreProiesMatures++;
-                if (nombreProiesMatures == 2) {
-                    bebeAntilopes.add(animal.accoucher());
-                    nombreProiesMatures = 0;
+            if (animal.estProie() && animal.estMature()) {
+                countAntilope++;
+                if (countAntilope == 2) {
+                    animal.accoucher();
+                    bebeAntilopes.add(animal);
+                    countAntilope = 0;
                 }
-                if (animal.estProie()) {
-                    nombrePredateursMatures++;
-                    if (nombreProiesMatures == 2) {
-                        bebeLions.add(animal.accoucher());
-                        nombreProiesMatures = 0;
+                if (animal.estPredateur() && animal.estMature()) {
+                    countLion++;
+                    if (countLion == 2) {
+                        animal.accoucher();
+                        bebeLions.add(animal);
+                        countLion = 0;
                     }
                 }
             }
@@ -138,7 +142,6 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         individus.addAll(bebeAntilopes);
         individus.addAll(bebeLions);
     }
-
 
 
     @Override
