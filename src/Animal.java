@@ -50,11 +50,17 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public Animal accoucher () {
-            if (estProie()==true){
-                return new Antilope(facteurCroissance);
+
+            if (estProie()){
+                Animal bebeAntilope= new Antilope(facteurCroissance);
+               bebeAntilope.naitre();
+               return bebeAntilope;
             }
-            else{
-                return new Lion(facteurCroissance);
+            else {
+
+                Animal bebeLion = new Lion(facteurCroissance);
+                bebeLion.naitre();
+                return bebeLion;
             }
         }
 
