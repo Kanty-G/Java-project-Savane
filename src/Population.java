@@ -28,14 +28,16 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     protected int nombrePredateurs=0;
     protected int nombreProiesMatures=0;
     protected int nombrePredateursMatures=0;
+    protected ArrayList<Animal> bebeLions = new ArrayList<>();
+    protected ArrayList<Animal> bebeAntilopes = new ArrayList<>();
+
     private ArrayList<Animal> individus = new ArrayList<>();
+
 
     public Population(Herbe herbe, ArrayList < Animal > proies, ArrayList < Animal > predateurs) {
 
         individus.addAll(proies);
         individus.addAll(predateurs);
-
-
 
     }
 
@@ -82,7 +84,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
-    public int getNombreProiesChassables () {
+    public int getNombreProiesChassables () { // A VOIR : LE 20% C'EST SUR TOUT LES ANTILOPES OU BIEN SUR JUSTE LE DEBUT DE LA CHASSE AU ANTILOPES
         return (int)(0.2 * getNombreProies());// APRES AVOIR VIEILLIT
     }
 
@@ -117,22 +119,27 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void reproduire () {
-
-        for (int i=0; i < individus.size();i++) {
-            //Animal bebe = animal.accoucher();
+        for(Animal animal: individus) {
+            if (animal.estProie()) {
+                nombreProiesMatures++;
+                if (nombreProiesMatures == 2) {
+                    bebeAntilopes.add(animal.accoucher());
+                    nombreProiesMatures = 0;
+                }
+                if (animal.estProie()) {
+                    nombrePredateursMatures++;
+                    if (nombreProiesMatures == 2) {
+                        bebeLions.add(animal.accoucher());
+                        nombreProiesMatures = 0;
+                    }
+                }
+            }
         }
-
-        for(int i=0; i <(getNombreProiesMatures()/2);i++) {
-            Antilope.accoucher();
-            Antilope.naitre();
-            individus.add(Antilope);
-
-        }
-        for(int i=0; i <(getNombrePredateursMatures()/2);i++){
-            enfant.accoucher();
-            individus.add(enfant);
-        }
+        individus.addAll(bebeAntilopes);
+        individus.addAll(bebeLions);
     }
+
+
 
     @Override
     public void melanger () {
