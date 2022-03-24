@@ -108,8 +108,25 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void chasser () {
+       int proiesAchassser= getNombreProiesChassables();
+       int count=0;
+       double masseAcc=0;
+       melanger();
+       for(int i = 0;i<(individus.size());i++){
+           if(individus.get(i).estPredateur() && count< getNombreProiesChassables()){
+               for(int j=(i+1);j<(getIndividus().size());j++){
+                   if(individus.get(j).estProie() && masseAcc <= individus.get(i).getMasse()*2){
+                       individus.remove(individus.get(j));
+                       masseAcc += masseAcc+individus.get(j).getMasse();
+                       count++;
+                   }
 
-
+               }
+               masseAcc=0;
+           }
+           individus.get(i).mourir();
+           individus.remove(individus.get(i));
+       }
 
     }
 
@@ -143,6 +160,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void melanger () {
         Collections.shuffle(this.individus, new Random(4));
     }
+
 
     @Override
     public Iterator<Animal> iterator() {
