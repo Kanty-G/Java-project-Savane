@@ -66,21 +66,17 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public void mourir () {
-
             vivant = false;
         }
 
         @Override
         public boolean estVivant () {
-
             return vivant;
         }
 
         @Override
         public boolean estMature () {
-            if (age < getAgeMature()) {
-                return false;
-            } return true;
+            return age >= getAgeMature();
         }
 
         @Override
