@@ -8,6 +8,8 @@
 //  Créé pour le cours IFT1025 H22
 //
 
+import java.util.ArrayList;
+
 /**
    class Animal
     implements the Prey/Predator relationship
@@ -27,6 +29,12 @@ abstract class Animal implements ProiePredateur {
         protected boolean vivant;
         protected boolean predateur;
 
+        public void  setNourriture(Herbe nourriture){
+
+        }
+        public void setNourriture(ArrayList<Animal> nourriture){
+
+        }
 
         @Override
         public void naitre () {
@@ -43,9 +51,11 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
-        public void manger(){ // besoin savoir se que tu mange , la quanite et l<actualise
+        public void manger(){ // besoin savoir se que tu mange , la quantite et l<actualise
+                if(estPredateur()){
 
-            masseAManger = masse * 2; // REVOIR MARCHE PAS defenir dans lion et antilope
+                }
+                masseAManger = masse * 2; // REVOIR MARCHE PAS defenir dans lion et antilope
         }
 
         @Override
@@ -57,7 +67,6 @@ abstract class Animal implements ProiePredateur {
                return bebeAntilope;
             }
             else {
-
                 Animal bebeLion = new Lion(facteurCroissance);
                 bebeLion.naitre();
                 return bebeLion;

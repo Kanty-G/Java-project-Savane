@@ -19,6 +19,7 @@ public class Antilope extends Animal{
     public static final int ageMature = 2;
     static final public int AGEMAX = 15;
     int masse = 10;
+    private Herbe nourriture;
 
     public Antilope(double facteurCroissance) {
         this.facteurCroissance = facteurCroissance;
@@ -33,7 +34,10 @@ public class Antilope extends Animal{
     public int getAgeMature(){
         return ageMature;
     }
-
+    @Override
+    public void  setNourriture(Herbe nourriture){
+        this. nourriture=nourriture;
+    }
 
 }
 

@@ -8,6 +8,8 @@
 //  Créé pour le cours IFT1025 H22
 //
 
+import java.util.ArrayList;
+
 /**
    class Lion
     extends Animal
@@ -19,6 +21,9 @@ public class Lion extends Animal {
     public static final int ageMature = 5;
     public static final int AGEMAX = 50;
     int masse = 10;
+    private ArrayList<Animal>nourriture;
+
+
 
     public Lion(double facteurCroissance) { // si regarde dans savanes Lions c'est Lions( double facteurCroissanceLions)
         this.facteurCroissance = facteurCroissance;
@@ -33,5 +38,9 @@ public class Lion extends Animal {
     @Override
     public int getAgeMature(){
         return ageMature;
+    }
+    @Override
+    public void setNourriture(ArrayList<Animal> nourriture){
+        this.nourriture= nourriture;
     }
 }
