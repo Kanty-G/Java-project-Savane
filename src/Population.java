@@ -28,6 +28,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     protected int nombrePredateurs=0;
     protected int nombreProiesMatures=0;
     protected int nombrePredateursMatures=0;
+    protected Herbe herbes;
 
     private ArrayList<Animal> individus = new ArrayList<>();
 
@@ -36,6 +37,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         individus.addAll(proies);
         individus.addAll(predateurs);
+        herbes= herbe;
+
 
     }
 
@@ -84,7 +87,9 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
-    public double masseProies () { // JE NE SAIS PAS TROP avec vieillir ou quoi???
+    public double masseProies () {
+
+        // JE NE SAIS PAS TROP avec vieillir ou quoi???
         // pour debuger c'est la masse total de tout les proies ensemble, si veillit fit des changemnents, si nait, si meurt ...
 
         return 0;
@@ -107,28 +112,45 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
+    //faire un set pour  accéder à l'herbe;
     public void chasser () {
        int proiesAchassser= getNombreProiesChassables();
        int count=0;
-       double masseAcc=0;
+       double masseHerbes=herbes.getMasseAnnuelle();
        melanger();
-       for(int i = 0;i<(individus.size());i++){
-           if(individus.get(i).estPredateur() && count< getNombreProiesChassables()){
-               for(int j=(i+1);j<(getIndividus().size());j++){
-                   if(individus.get(j).estProie() && masseAcc <= individus.get(i).getMasse()*2){
-                       individus.remove(individus.get(j));
-                       masseAcc += masseAcc+individus.get(j).getMasse();
-                       count++;
+       for (Animal animal : individus) {
+           if (animal.estProie() && animal.estVivant()) {
+               if (masseHerbes >= animal.getMasse() * 2) {
+                   animal.manger();
+                   masseHerbes = masseHerbes - animal.getMasse() * 2;
+               }
+               else {animal.mourir();}
+           }
+           if (animal.estPredateur() && animal.estVivant()) {
+               double masseMangees = 0;
+               for (int i = 0; i<individus.size();i++){
+                   if (individus.get(i).estProie()&& individus.get(i).estVivant()) {
+                       if (masseMangees <= (animal.getMasse()*2) && count < proiesAchassser) {
+                           animal.manger();
+                           masseMangees=masseMangees+(animal.getMasse()*2);
+                           individus.get(i).mourir();
+                           count++;
+                       } else {
+                           animal.mourir();
+                       }
                    }
 
                }
-               masseAcc=0;
+
+
            }
-           individus.get(i).mourir();
-           individus.remove(individus.get(i));
        }
 
+        individus.removeIf(animal -> !animal.estVivant());
+
+
     }
+
 
     @Override
     public void reproduire () {

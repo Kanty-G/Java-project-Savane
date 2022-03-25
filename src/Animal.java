@@ -28,6 +28,8 @@ abstract class Animal implements ProiePredateur {
         protected double masseAManger;
         protected boolean vivant;
         protected boolean predateur;
+        protected Herbe herbe;
+        protected ArrayList<Animal> individus;
 
         public void  setNourriture(Herbe nourriture){
 
@@ -52,10 +54,12 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public void manger(){ // besoin savoir se que tu mange , la quantite et l<actualise
-                if(estPredateur()){
-
+                if (estProie()){
+                   setNourriture(herbe);
                 }
-                masseAManger = masse * 2; // REVOIR MARCHE PAS defenir dans lion et antilope
+                if(estPredateur()) {
+                    setNourriture(individus);
+                }
         }
 
         @Override
