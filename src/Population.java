@@ -88,16 +88,25 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public double masseProies () {
-
+        double masseProies=0;
+        for (Animal animal:individus)
+            if(animal.estProie()){
+                masseProies=masseProies+ animal.getMasse();
+            }
         // JE NE SAIS PAS TROP avec vieillir ou quoi???
         // pour debuger c'est la masse total de tout les proies ensemble, si veillit fit des changemnents, si nait, si meurt ...
 
-        return 0;
+        return masseProies;
     }
 
     @Override
     public double massePredateurs () {
-        return 0;
+        double massePredateurs=0;
+        for (Animal animal:individus)
+            if(animal.estPredateur()) {
+                massePredateurs = massePredateurs + animal.getMasse();
+            }
+        return massePredateurs;
     }
 
     @Override
@@ -118,6 +127,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
        int count=0;
        double masseHerbes=herbes.getMasseAnnuelle();
        melanger();
+
        for (Animal animal : individus) {
            if (animal.estProie() && animal.estVivant()) {
                if (masseHerbes >= animal.getMasse() * 2) {
@@ -128,26 +138,25 @@ public class Population implements EcoSysteme, Iterable<Animal> {
            }
            if (animal.estPredateur() && animal.estVivant()) {
                double masseMangees = 0;
-               for (int i = 0; i<individus.size();i++){
-                   if (individus.get(i).estProie()&& individus.get(i).estVivant()) {
-                       if (masseMangees <= (animal.getMasse()*2) && count < proiesAchassser) {
-                           animal.manger();
-                           masseMangees=masseMangees+(animal.getMasse()*2);
-                           individus.get(i).mourir();
-                           count++;
+               if (count < proiesAchassser) {
+                   for (Animal value : individus)
+                       if (masseMangees < animal.getMasse() * 2) {
+                           if (value.estProie() && value.estVivant()) {
+                               animal.manger();
+                               masseMangees = masseMangees + value.getMasse();
+                               value.mourir();
+                               count = count + 1;
+                           }
                        } else {
-                           animal.mourir();
+                           break;
                        }
+
                    }
-
-               }
-
-
+                    else{animal.mourir();}
            }
        }
 
-        individus.removeIf(animal -> !animal.estVivant());
-
+       individus.removeIf(animal -> !animal.estVivant());
 
     }
 
