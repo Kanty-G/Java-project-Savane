@@ -172,7 +172,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                 }
             }
         individus.addAll(bebes);
-        individus.removeIf(animal -> !animal.estVivant());
+        individus.removeIf(animal -> !animal.estVivant());// enlève animaux morts
     }
 
 
