@@ -189,9 +189,9 @@ public class TestSecondaire {
     testV = new Savane(8,1.1,500,1.1,1,20000,200000,3.0,true);
     pop = testV.getSavane();
     pop.chasser();
+
     if(pop.getNombrePredateurs()!=8 || pop.getNombreProies()!=484){
-        System.out.println(pop.getNombrePredateurs() + " " + pop.getNombreProies());
-        print("Problème avec la fonction Population.chasser");
+        print("1Problème avec la fonction Population.chasser");
         nT++;
     }
     totalTest++;
@@ -199,8 +199,9 @@ public class TestSecondaire {
     testV = new Savane(80,1.1,500,1.1,1,20000,200000,3.0,true);
     pop = testV.getSavane();
     pop.chasser();
+    System.out.println(pop.getNombrePredateurs());System.out.println(pop.getNombreProies());
     if(pop.getNombrePredateurs()!=50 || pop.getNombreProies()!=400){
-        System.out.println(pop.getNombrePredateurs() + " " + pop.getNombreProies());
+
         print("Problème avec la fonction Population.chasser");
         nT++;
     }
@@ -210,8 +211,8 @@ public class TestSecondaire {
     pop = testV.getSavane();
     pop.chasser();
     pop.chasser();
+
     if(pop.getNombrePredateurs()!=0 || pop.getNombreProies()!=0){
-        System.out.println(pop.getNombrePredateurs() + " " + pop.getNombreProies());
         print("Problème avec la fonction Population.chasser Nouveau");
         nT++;
     }
