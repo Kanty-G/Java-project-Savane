@@ -24,10 +24,6 @@ import java.util.Random;
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
 
-    protected int nombreProies=0;
-    protected int nombrePredateurs=0;
-    protected int nombreProiesMatures=0;
-    protected int nombrePredateursMatures=0;
     protected Herbe herbes;
 
     private ArrayList<Animal> individus = new ArrayList<>();
@@ -66,9 +62,9 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProiesMatures () {
-
-        for(int i=0;i<=(individus.size()-1);i++){
-            if(individus.get(i).estProie()&individus.get(i).estMature()){
+        int nombreProiesMatures=0;
+        for (Animal animal : individus) {
+            if (animal.estProie() & animal.estMature()) {
                 nombreProiesMatures++;
             }
         }
@@ -77,6 +73,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombrePredateursMatures () {
+        int nombrePredateursMatures=0;
         for(int i=0;i<=(individus.size()-1);i++){
             if(individus.get(i).estPredateur()&individus.get(i).estMature()){
                 nombrePredateursMatures++;
@@ -94,7 +91,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public double masseProies () {
         double masseProies=0;
         for (Animal animal:individus)
-            if(animal.estProie()){
+            if(animal.estProie() ){
                 masseProies=masseProies+ animal.getMasse();
             }
         return masseProies;
@@ -113,13 +110,12 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
-        for (int i = 0; i < individus.size(); i++) {
-            Animal animal = individus.get(i);
+        herbes.vieillir();
+        for (Animal animal : individus) {
             animal.vieillir();
             // si l'animal est pas vivant il sera enlevé de la liste
-            if (!animal.estVivant())
-                individus.remove(i--);
         }
+        individus.removeIf(animal -> !animal.estVivant());
     }
 
     @Override
@@ -133,28 +129,28 @@ public class Population implements EcoSysteme, Iterable<Animal> {
            if (animal.estProie() && animal.estVivant()) {
                if (masseHerbes >= animal.getMasse() * 2) {
                    animal.manger();
-                   masseHerbes = masseHerbes - animal.getMasse() * 2;
+                   masseHerbes -= animal.getMasse() * 2;
                }
-               else {animal.mourir();}
+               else animal.mourir();
            }
            if (animal.estPredateur() && animal.estVivant()) {
-               double masseMangees = 0;
-               if (count < proiesAchasser) {
+               double masseMangee = 0;
                    // reparcours liste pour tuer les Antilopes nescessaire au lion en question
-                   for (Animal value : individus)
-                       if (masseMangees < animal.getMasse() * 2) {
-                           if (value.estProie() && value.estVivant()) {
-                               animal.manger();
-                               masseMangees = masseMangees + value.getMasse();
-                               value.mourir();
-                               count = count + 1;
-                           }
-                       } else {
-                           break;
-                       }
-
+               for (Animal value : individus) {
+                   if (count >= proiesAchasser) {
+                       animal.mourir();
+                       break;
                    }
-                    else{animal.mourir();}
+                   if (masseMangee < animal.getMasse() * 2) {
+                       if (value.estProie() && value.estVivant()) {
+                           animal.manger();
+                           masseMangee += value.getMasse();
+                           value.mourir();
+                           count++;
+                       }
+                   }
+                   if (masseMangee >= animal.getMasse() * 2) break;
+               }
            }
        }
        individus.removeIf(animal -> !animal.estVivant());
@@ -165,24 +161,26 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void reproduire () {
         // ArrayList des bebe qui va être ajouté a individus
         ArrayList<Animal> bebes = new ArrayList<>();
-        int countAntilope = 0;
-        int countLion = 0;
+        int bebesAntilopes= getNombreProiesMatures()/2;
+        int bebesLions= getNombrePredateursMatures()/2;
         for(Animal parent: individus) {
-            if (parent.estProie() && parent.estMature()) {
-                countAntilope++; // incrémente afin de parcourir dans la liste
-                if (countAntilope == 2) {
-                    bebes.add(parent.accoucher());
-                    countAntilope = 0; // reinitialise le compteur après l'accouchement d'un bébé par 2 antilopes
+            if (!parent.estVivant() || !parent.estMature()) continue;
+            if (parent.estProie()) {
+               // incrémente afin de parcourir dans la liste
+                if (bebesAntilopes>0) {
+                    bebes.add(parent.accoucher()); // add le bebe Antilope
+                    bebesAntilopes--; // reinitialise le compteur après l'accouchement d'un bébé par 2 antilopes
                 }
             }
-            else if (parent.estPredateur() && parent.estMature()) {
-                countLion++;
-                if (countLion == 2) {
+            else if (parent.estPredateur()) {
+                if (bebesLions>0) {
                     bebes.add(parent.accoucher());
-                    countLion = 0;
-                    }
+                    bebesLions--;
                 }
             }
+
+            if (bebesLions == 0 && bebesAntilopes == 0) break;
+        }
         individus.addAll(bebes);
     }
 
