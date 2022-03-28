@@ -1,6 +1,6 @@
 // Fichier :     Population.java
 // Création:     
-// Auteurs :     
+// Auteurs :   Jasmine Livie & Kanty Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -44,14 +44,18 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProies () {
+        int nombreProies = 0;
         for (Animal animal : individus)
-            if (animal.estProie()) nombreProies++;
+            if (animal.estProie() && animal.estVivant()) {
+                nombreProies++;
+            }
 
         return nombreProies;
     }
 
     @Override
     public int getNombrePredateurs () {
+        int nombrePredateurs = 0;
         for (Animal animal : individus) {
             if (animal.estPredateur()) {
                 nombrePredateurs++;
@@ -82,8 +86,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
-    public int getNombreProiesChassables () { // A VOIR : LE 20% C'EST SUR TOUT LES ANTILOPES OU BIEN SUR JUSTE LE DEBUT DE LA CHASSE AU ANTILOPES
-        return (int)(0.2 * getNombreProies());// APRES AVOIR VIEILLIT
+    public int getNombreProiesChassables () {
+        return (int)(0.2 * getNombreProies());
     }
 
     @Override
@@ -93,12 +97,10 @@ public class Population implements EcoSysteme, Iterable<Animal> {
             if(animal.estProie()){
                 masseProies=masseProies+ animal.getMasse();
             }
-        // JE NE SAIS PAS TROP avec vieillir ou quoi???
-        // pour debuger c'est la masse total de tout les proies ensemble, si veillit fit des changemnents, si nait, si meurt ...
-
         return masseProies;
     }
 
+    // masse total de tout les predateurs
     @Override
     public double massePredateurs () {
         double massePredateurs=0;
@@ -123,11 +125,10 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     @Override
     //faire un set pour  accéder à l'herbe;
     public void chasser () {
-       int proiesAchassser= getNombreProiesChassables();
+       int proiesAchasser = getNombreProiesChassables();
        int count=0;
-       double masseHerbes=herbes.getMasseAnnuelle();
+       double masseHerbes = herbes.getMasseAnnuelle();
        melanger();
-
        for (Animal animal : individus) {
            if (animal.estProie() && animal.estVivant()) {
                if (masseHerbes >= animal.getMasse() * 2) {
@@ -138,7 +139,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
            }
            if (animal.estPredateur() && animal.estVivant()) {
                double masseMangees = 0;
-               if (count < proiesAchassser) {
+               if (count < proiesAchasser) {
+                   // reparcours liste pour tuer les Antilopes nescessaire au lion en question
                    for (Animal value : individus)
                        if (masseMangees < animal.getMasse() * 2) {
                            if (value.estProie() && value.estVivant()) {
@@ -155,9 +157,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
                     else{animal.mourir();}
            }
        }
-
        individus.removeIf(animal -> !animal.estVivant());
-
     }
 
 
