@@ -45,8 +45,8 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public void vieillir (){
-            age = age + 1;
-            masse = masse * facteurCroissance; //
+            age ++;
+            masse *= facteurCroissance;
             if (age > getAgeMax()){
                 mourir();
             }
