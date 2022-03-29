@@ -1,6 +1,6 @@
 // Fichier :     Antilope.java
 // Création: 2022.03.10
-// Auteurs :  Jasmine Livie & Kanty Gakima
+// Auteurs :  Jasmine Livie & Kanty Louange Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -18,17 +18,17 @@
 public class Antilope extends Animal{
     public static final int ageMature = 2;
     static final public int AGEMAX = 15;
-    int masse = 10;
     private Herbe nourriture;
 
     public Antilope(double facteurCroissance) {
         this.facteurCroissance = facteurCroissance;
-        naitre();
-        setProie(true);
+        naitre(); // appelle la methode naitre pour que toute les antilopes soit originalement vivante = true
+        setProie(true);// Antilope est true pour Proie
     }
+
+    // Override getAgeMax(), getAgemature() et setNourriture pour le mettre propre aux antilopes
     @Override
     public int getAgeMax(){
-
         return AGEMAX;
     }
     @Override
@@ -37,7 +37,7 @@ public class Antilope extends Animal{
     }
     @Override
     public void  setNourriture(Herbe nourriture){
-        this. nourriture=nourriture;
+        this.nourriture=nourriture;
     }
 
 }

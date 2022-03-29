@@ -1,6 +1,6 @@
 // Fichier :     Animal.java
-// Création:     
-// Auteurs :      
+// Création: 2022.03.10
+// Auteurs : Jasmine Livie & Kanty Louange Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -15,8 +15,6 @@ import java.util.ArrayList;
     implements the Prey/Predator relationship
 
 **/
-
-    // TO BE COMPLETED //
 
 abstract class Animal implements ProiePredateur {
         protected int age = 0;
@@ -45,6 +43,8 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public void vieillir (){
+            // augmente l'age de 1 et la masse est multiplie par le facteur de croissance,
+            // si age depasse age max alors l'animal meurt
             age ++;
             masse *= facteurCroissance;
             if (age > getAgeMax()){
@@ -53,7 +53,7 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
-        public void manger(){ // besoin savoir se que tu mange , la quantite et l<actualise
+        public void manger(){
                 if (estProie()){
                    setNourriture(herbe);
                 }
@@ -64,11 +64,12 @@ abstract class Animal implements ProiePredateur {
 
         @Override
         public Animal accoucher () {
-
+            // utilise dans la fonction reproduire
+            // instanciation du nouveau bébé en lion ou en Antilopes ainsi que setter vivant à true
             if (estProie()){
                 Animal bebeAntilope= new Antilope(facteurCroissance);
-               bebeAntilope.naitre();
-               return bebeAntilope;
+                bebeAntilope.naitre();
+                return bebeAntilope;
             }
             else {
                 Animal bebeLion = new Lion(facteurCroissance);
@@ -93,10 +94,7 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
-        public void setProie ( boolean proie){
-
-            this.proie = proie;
-        }
+        public void setProie ( boolean proie){this.proie = proie;}
 
         @Override
         public boolean estProie () {
