@@ -28,6 +28,7 @@ abstract class Animal implements ProiePredateur {
         protected Herbe herbe;
         protected ArrayList<Animal> individus;
 
+        //set la ourriture que les individus peuvent manger selon que c'est des proies ou prédateurs
         public void  setNourriture(Herbe nourriture){
         }
         public void setNourriture(ArrayList<Animal> nourriture){
@@ -39,9 +40,9 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
+        // augmente l'age de l'animal de 1 et multiplie sa masse avec le facteur de croissance
+        // si l'age depasse AGEMAX alors l'animal meurt
         public void vieillir (){
-            // augmente l'age de 1 et la masse est multiplie par le facteur de croissance,
-            // si l'age depasse age max alors l'animal meurt
             age ++;
             masse *= facteurCroissance;
             if (age > getAgeMax()){
@@ -50,6 +51,7 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
+        //indique ce que les proies et les prédateurs mangent
         public void manger(){
                 if (estProie()){
                    setNourriture(herbe);
@@ -60,18 +62,14 @@ abstract class Animal implements ProiePredateur {
         }
 
         @Override
+        //fait accoucher l'animal
         public Animal accoucher () {
-            // utilise dans la fonction reproduire
-            // instanciation du nouveau bébé en lion ou en Antilopes ainsi que setter vivant à true
+            // instanciation du nouveau bébé en lion ou en Antilope;
             if (estProie()){
-                Animal bebeAntilope= new Antilope(facteurCroissance);
-                bebeAntilope.naitre();
-                return bebeAntilope;
+                return new Antilope(facteurCroissance);
             }
             else {
-                Animal bebeLion = new Lion(facteurCroissance);
-                bebeLion.naitre();
-                return bebeLion;
+                return new Lion(facteurCroissance);
             }
         }
         @Override
@@ -102,7 +100,7 @@ abstract class Animal implements ProiePredateur {
             return predateur;
         }
         @Override
-        public void setPredateur( boolean predateur ){// set animal mode to predator
+        public void setPredateur( boolean predateur ){ // set animal mode to predator
             this.predateur = predateur;
         }
 

@@ -1,5 +1,5 @@
-// Fichier :     Lion.java
-// Création:   2022.03.10
+// Fichier : Lion.java
+// Création: 2022.03.10
 // Auteurs : Jasmine Livie & Kanty Louange Gakima
 //
 // Ce code n'est pas protégé par un copyright.
@@ -19,17 +19,14 @@ import java.util.ArrayList;
 public class Lion extends Animal {
     public static final int ageMature = 5;
     public static final int AGEMAX = 50;
-    private ArrayList<Animal> nourriture;
-
 
 
     public Lion(double facteurCroissance) {
         this.facteurCroissance = facteurCroissance;
         naitre(); // appelle la methode naitre pour que toute les antilopes soit originalement vivante = true
-        setProie(false); // lion est false pour proie
-        setPredateur(true); // lion est true pour predateur
+        setPredateur(true); //le lion est un prédateur
     }
-    // Override getAgeMax(), getAgemature() et setNourriture pour le mettre propre aux lions
+
     @Override
     public int getAgeMax(){
         return AGEMAX;
@@ -40,6 +37,5 @@ public class Lion extends Animal {
     }
     @Override
     public void setNourriture(ArrayList<Animal> nourriture){
-        this.nourriture= nourriture;
     }
 }
