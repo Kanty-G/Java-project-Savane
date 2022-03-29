@@ -76,7 +76,6 @@ abstract class Animal implements ProiePredateur {
                 return bebeLion;
             }
         }
-
         @Override
         public void mourir () {
             vivant = false;
