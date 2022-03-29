@@ -29,10 +29,8 @@ abstract class Animal implements ProiePredateur {
         protected ArrayList<Animal> individus;
 
         public void  setNourriture(Herbe nourriture){
-
         }
         public void setNourriture(ArrayList<Animal> nourriture){
-
         }
 
         @Override
