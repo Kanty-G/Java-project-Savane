@@ -1,6 +1,6 @@
 // Fichier :     Antilope.java
-// Création:     
-// Auteurs :     
+// Création: 2022.03.10
+// Auteurs :  Jasmine Livie & Kanty Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -14,7 +14,7 @@
 
 **/
 
-    // TO BE COMPLETED //
+
 public class Antilope extends Animal{
     public static final int ageMature = 2;
     static final public int AGEMAX = 15;
@@ -28,6 +28,7 @@ public class Antilope extends Animal{
     }
     @Override
     public int getAgeMax(){
+
         return AGEMAX;
     }
     @Override

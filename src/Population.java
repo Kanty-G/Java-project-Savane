@@ -1,6 +1,6 @@
 // Fichier :     Population.java
 // Création:     
-// Auteurs :     
+// Auteurs :   Jasmine Livie & Kanty Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -24,7 +24,6 @@ import java.util.Random;
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
 
-
     protected Herbe herbes;
 
     private ArrayList<Animal> individus = new ArrayList<>();
@@ -41,19 +40,20 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public int getNombreProies () {
-        int nombreProies=0;
+        int nombreProies = 0;
         for (Animal animal : individus)
-            if (animal.estProie() && animal.estVivant())
+            if (animal.estProie() && animal.estVivant()) {
                 nombreProies++;
+            }
 
         return nombreProies;
     }
 
     @Override
     public int getNombrePredateurs () {
-        int nombrePredateurs=0;
+        int nombrePredateurs = 0;
         for (Animal animal : individus) {
-            if (animal.estPredateur() && animal.estVivant()) {
+            if (animal.estPredateur()) {
                 nombrePredateurs++;
             }
         }
@@ -63,8 +63,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     @Override
     public int getNombreProiesMatures () {
         int nombreProiesMatures=0;
-        for (Animal animal : individus ) {
-            if (animal.estProie() && animal.estMature() && animal.estVivant()) {
+        for (Animal animal : individus) {
+            if (animal.estProie() & animal.estMature()) {
                 nombreProiesMatures++;
             }
         }
@@ -74,8 +74,8 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     @Override
     public int getNombrePredateursMatures () {
         int nombrePredateursMatures=0;
-        for (Animal animal : individus) {
-            if (animal.estPredateur() && animal.estMature() && animal.estVivant()) {
+        for(int i=0;i<=(individus.size()-1);i++){
+            if(individus.get(i).estPredateur()&individus.get(i).estMature()){
                 nombrePredateursMatures++;
             }
         }
@@ -83,20 +83,21 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     }
 
     @Override
-    public int getNombreProiesChassables () { // A VOIR : LE 20% C'EST SUR TOUT LES ANTILOPES OU BIEN SUR JUSTE LE DEBUT DE LA CHASSE AU ANTILOPES
-        return (int)(0.2 * getNombreProies());// APRES AVOIR VIEILLIT
+    public int getNombreProiesChassables () {
+        return (int)(0.2 * getNombreProies());
     }
 
     @Override
     public double masseProies () {
         double masseProies=0;
         for (Animal animal:individus)
-            if(animal.estProie()){
+            if(animal.estProie() ){
                 masseProies=masseProies+ animal.getMasse();
             }
         return masseProies;
     }
 
+    // masse total de tout les predateurs
     @Override
     public double massePredateurs () {
         double massePredateurs=0;
@@ -109,76 +110,83 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
+        herbes.vieillir();
         for (Animal animal : individus) {
             animal.vieillir();
             // si l'animal est pas vivant il sera enlevé de la liste
         }
+        individus.removeIf(animal -> !animal.estVivant());
     }
 
     @Override
     //faire un set pour  accéder à l'herbe;
     public void chasser () {
-       int proiesAchasser= getNombreProiesChassables();
+       int proiesAchasser = getNombreProiesChassables();
        int count=0;
-       double masseHerbes=herbes.getMasseAnnuelle();
+       double masseHerbes = herbes.getMasseAnnuelle();
        melanger();
-
        for (Animal animal : individus) {
            if (animal.estProie() && animal.estVivant()) {
                if (masseHerbes >= animal.getMasse() * 2) {
+                   animal.manger();
                    masseHerbes -= animal.getMasse() * 2;
                }
-               else  animal.mourir();
+               else animal.mourir();
            }
            if (animal.estPredateur() && animal.estVivant()) {
                double masseMangee = 0;
-               if (count < proiesAchasser) {
-                   for (Animal value : individus)
-                       if (masseMangee < animal.getMasse() * 2) {
-                           if (value.estProie() && value.estVivant()) {
-                               masseMangee = masseMangee + value.getMasse();
-                               value.mourir();
-                               count++;
-                           }
-                       } else {
-                           break;
+                   // reparcours liste pour tuer les Antilopes nescessaire au lion en question
+               for (Animal value : individus) {
+                   if (count >= proiesAchasser) {
+                       animal.mourir();
+                       break;
+                   }
+                   if (masseMangee < animal.getMasse() * 2) {
+                       if (value.estProie() && value.estVivant()) {
+                           animal.manger();
+                           masseMangee += value.getMasse();
+                           value.mourir();
+                           count++;
                        }
                    }
-                    else{animal.mourir();}
+                   if (masseMangee >= animal.getMasse() * 2) break;
+               }
            }
        }
+       individus.removeIf(animal -> !animal.estVivant());
     }
+
 
     @Override
     public void reproduire () {
         // ArrayList des bebe qui va être ajouté a individus
         ArrayList<Animal> bebes = new ArrayList<>();
-        int countAntilope = 0;
-        int countLion = 0;
+        int bebesAntilopes= getNombreProiesMatures()/2;
+        int bebesLions= getNombrePredateursMatures()/2;
         for(Animal parent: individus) {
-            if (parent.estProie() && parent.estMature() && parent.estVivant()) {
-                countAntilope++; // incrémente afin de parcourir dans la liste
-                if (countAntilope == 2) {
-                    bebes.add(parent.accoucher());
-                    countAntilope = 0; // reinitialise le compteur après l'accouchement d'un bébé par 2 antilopes
+            if (!parent.estVivant() || !parent.estMature()) continue;
+            if (parent.estProie()) {
+               // incrémente afin de parcourir dans la liste
+                if (bebesAntilopes>0) {
+                    bebes.add(parent.accoucher()); // add le bebe Antilope
+                    bebesAntilopes--; // reinitialise le compteur après l'accouchement d'un bébé par 2 antilopes
                 }
             }
-            else if (parent.estPredateur() && parent.estMature() && parent.estVivant()) {
-                countLion++;
-                if (countLion == 2) {
+            else if (parent.estPredateur()) {
+                if (bebesLions>0) {
                     bebes.add(parent.accoucher());
-                    countLion = 0;
-                    }
+                    bebesLions--;
                 }
             }
+
+            if (bebesLions == 0 && bebesAntilopes == 0) break;
+        }
         individus.addAll(bebes);
-        individus.removeIf(animal -> !animal.estVivant());// enlève animaux morts
     }
 
 
     @Override
     public void melanger () {
-        individus.removeIf(animal -> !animal.estVivant());
         Collections.shuffle(this.individus, new Random(4));
     }
 
