@@ -1,6 +1,6 @@
-// Fichier :     Population.java
-// Création:     
-// Auteurs :   Jasmine Livie & Kanty Gakima
+// Fichier :  Population.java
+// Création:  20.03.2022
+// Auteurs :  Jasmine Livie & Kanty Louange Gakima
 //
 // Ce code n'est pas protégé par un copyright.
 // 
@@ -24,7 +24,7 @@ import java.util.Random;
 // Defines a population of herb and animals (preys and predators), iterable
 public class Population implements EcoSysteme, Iterable<Animal> {
 
-    protected Herbe herbes;
+    protected Herbe herbeSavane;
 
     private ArrayList<Animal> individus = new ArrayList<>();
 
@@ -33,9 +33,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
         individus.addAll(proies);
         individus.addAll(predateurs);
-        herbes= herbe;
-
-
+        herbeSavane = herbe;
     }
 
     @Override
@@ -110,7 +108,7 @@ public class Population implements EcoSysteme, Iterable<Animal> {
 
     @Override
     public void vieillir () {
-        herbes.vieillir();
+        herbeSavane.vieillir();
         for (Animal animal : individus) {
             animal.vieillir();
             // si l'animal est pas vivant il sera enlevé de la liste
@@ -123,13 +121,13 @@ public class Population implements EcoSysteme, Iterable<Animal> {
     public void chasser () {
        int proiesAchasser = getNombreProiesChassables();
        int count=0;
-       double masseHerbes = herbes.getMasseAnnuelle();
+       double masseHerbe = herbeSavane.getMasseAnnuelle();
        melanger();
        for (Animal animal : individus) {
            if (animal.estProie() && animal.estVivant()) {
-               if (masseHerbes >= animal.getMasse() * 2) {
+               if (masseHerbe >= animal.getMasse() * 2) {
                    animal.manger();
-                   masseHerbes -= animal.getMasse() * 2;
+                   masseHerbe -= animal.getMasse() * 2;
                }
                else animal.mourir();
            }
@@ -184,12 +182,10 @@ public class Population implements EcoSysteme, Iterable<Animal> {
         individus.addAll(bebes);
     }
 
-
     @Override
     public void melanger () {
         Collections.shuffle(this.individus, new Random(4));
     }
-
 
     @Override
     public Iterator<Animal> iterator() {
