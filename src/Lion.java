@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 **/
 
-
 public class Lion extends Animal {
     public static final int ageMature = 5;
     public static final int AGEMAX = 50;
