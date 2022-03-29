@@ -23,7 +23,6 @@ abstract class Animal implements ProiePredateur {
         protected double facteurCroissance;
         protected double masse = 10;
         protected int AGEMAX;
-        protected double masseAManger;
         protected boolean vivant;
         protected boolean predateur;
         protected Herbe herbe;
