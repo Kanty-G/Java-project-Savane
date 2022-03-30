@@ -28,7 +28,7 @@ abstract class Animal implements ProiePredateur {
         protected Herbe herbe;
         protected ArrayList<Animal> individus;
 
-        //set la ourriture que les individus peuvent manger selon que c'est des proies ou prédateurs
+        //set la nourriture que les individus peuvent manger selon que c'est des proies ou prédateurs
         public void  setNourriture(Herbe nourriture){
         }
         public void setNourriture(ArrayList<Animal> nourriture){
